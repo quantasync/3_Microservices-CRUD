@@ -14,7 +14,7 @@ public class UserService {
 			user.set_id(id);
 			user.setLastName(UserRepository.getLastName(id));
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
+			System.out.println("Error while sending GET in microservice 3");
 			e.printStackTrace();
 		}
 		return user;
@@ -24,7 +24,7 @@ public class UserService {
 		try {
 			UserRepository.addLastName(user, id);
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
+			System.out.println("Error while sending POST in microservice 3");
 			e.printStackTrace();
 		}
 	}
@@ -33,7 +33,7 @@ public class UserService {
 		try {
 			UserRepository.updateLastName(user, id);
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
+			System.out.println("Error while sending PUT in microservice 3");
 			e.printStackTrace();
 		}
 	}

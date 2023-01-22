@@ -16,24 +16,24 @@ public class WebClientService {
 			.defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
 			.defaultHeader(HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON_VALUE).build();
 
-	public User get(String id) {
+	public User getLastName(String id) {
 		return webClient.get()
 				.uri("/get/" + id)
 				.retrieve()
 				.bodyToMono(User.class).block();
 	}
 		
-	public ClientResponse post(User user, String id) {
+	public ClientResponse createLastName(User user, String id) {
 		return webClient.post().uri("/add/" + id).body(Mono.just(user), User.class).retrieve()
 				.bodyToMono(ClientResponse.class).block();
 	}
 
-	public ClientResponse put(User user, String id) {
+	public ClientResponse updateLastName(User user, String id) {
 		return webClient.put().uri("/update/" + id).body(Mono.just(user), User.class).retrieve()
 				.bodyToMono(ClientResponse.class).block();
 	}
 
-	public void delete(String id) {
+	public void deleteLastName(String id) {
 		webClient.delete().uri("/delete/" + id).retrieve().bodyToMono(String.class).block();
 	}
 }

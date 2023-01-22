@@ -21,18 +21,18 @@ public class UserRestController {
 	
 	private final UserService userService;
 	
-	@GetMapping(path="/get/{id}")
+	@GetMapping("/get/{id}")
 	public User getUser(@PathVariable String id) {
 		return userService.getUser(id);
 	}
 	
 	@PostMapping("/add/{id}")
-	public void postUser(@RequestBody User user, @PathVariable String id) throws Exception {
+	public void postUser(@RequestBody User user, @PathVariable String id) {
 		userService.postUser(user, id);
 	}
 
 	@PutMapping("/update/{id}")
-	public void putUser(@RequestBody User user, @PathVariable String id) throws Exception {
+	public void putUser(@RequestBody User user, @PathVariable String id) {
 		userService.putUser(user, id);
 	}
 

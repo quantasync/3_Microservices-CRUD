@@ -14,14 +14,14 @@ import com.m1.db.entity.User;
 public interface FeignService {
 	
 	@GetMapping(value = "/user/get/{id}")
-	User GetMidWithLastName(@PathVariable String id);
+	User getMiddleAndLastName(@PathVariable String id);
 	
 	@PostMapping(value = "/user/add/{id}")
-	String PostMidName(@RequestBody User user, @PathVariable String id);
+	User createMiddleAndLastName(@RequestBody User user, @PathVariable String id);
 
 	@PutMapping(value = "/user/update/{id}")
-	String PutMidName(@RequestBody User user, @PathVariable String id);
+	User updateMiddleAndLastName(@RequestBody User user, @PathVariable String id);
 
 	@DeleteMapping(value = "/user/delete/{id}")
-	String DeleteMidName(@PathVariable String id);
+	String deleteMiddleAndLastName(@PathVariable String id);
 }

@@ -25,14 +25,9 @@ public class UserRestController {
 	
 	private final UserService userService;
 	
-	@GetMapping("/getall/middlenames")
-	public ArrayList<String> getAllMiddleNames() {
-		return userService.getAllMiddleNames();
-	}
-	
-	@GetMapping("/getall/lastnames")
-	public ArrayList<String> getAllLastNames() {
-		return userService.getAllMiddleNames();
+	@GetMapping("/getall")
+	public ArrayList<User> getAllMiddleNames() {
+		return userService.getAllMiddleAndLastNames();
 	}
 	
 	@GetMapping("/get/{id}")

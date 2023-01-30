@@ -23,7 +23,7 @@ public class UserRestController {
 	
 	private final UserService userService;
 	
-	@GetMapping("/getall/lastnames")
+	@GetMapping("/getall")
 	public ArrayList<String> getAllLastNames() {
 		return userService.getAllLastNames();
 	}

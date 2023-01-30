@@ -15,12 +15,9 @@ import com.m1.db.entity.User;
 @FeignClient(name = "m1", url = "http://localhost:8092")
 public interface FeignService {
 	
-	@GetMapping(value = "/user/getall/middlenames")
-	ArrayList<String> getAllMiddleNames();
-	
-	@GetMapping(value = "/user/getall/lastnames")
-	ArrayList<String> getAllLastNames();
-	
+	@GetMapping(value = "/user/getall")
+	ArrayList<User> getAllMiddleAndLastNames();
+
 	@GetMapping(value = "/user/get/{id}")
 	User getMiddleAndLastName(@PathVariable String id);
 	

@@ -20,7 +20,7 @@ public class WebClientService {
 	
 	public ArrayList<String> getAllLastNames() {
 		return webClient.get()
-				.uri("/getall/lastnames")
+				.uri("/getall")
 				.retrieve()
 				.bodyToMono(ArrayList.class).block();
 	}

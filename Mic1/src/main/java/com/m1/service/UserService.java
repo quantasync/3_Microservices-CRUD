@@ -29,17 +29,16 @@ public class UserService {
 	public List<User> getAll() { 
 		var users = new ArrayList<User>();
 		try {
+			users.addAll(feignService.getAllMiddleAndLastNames());
 			var IDs = userRepository.getAllIDs();
 			var firstNames = userRepository.getAllFirstNames();
-			var middleNames = feignService.getAllMiddleNames();
-			var lastNames = feignService.getAllLastNames();
 			for(int i = 0; i < firstNames.size(); i++) {
 				var user = new User();
 				user.set_id(IDs.get(i));
 				user.setFirstName(firstNames.get(i));
-				user.setMiddleName(middleNames.get(i));
-				user.setLastName(lastNames.get(i));
-				users.add(user);
+				user.setMiddleName(users.get(i).getMiddleName());
+				user.setLastName(users.get(i).getLastName());
+				users.set(i, user);
 			}
 			
 		} catch (Exception e) {

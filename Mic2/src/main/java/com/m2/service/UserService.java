@@ -21,26 +21,22 @@ public class UserService {
 	@Autowired
 	private UserRepository userRepository;
 	
-	public ArrayList<String> getAllMiddleNames() { 
-		var middleNames = new ArrayList<String>();
+	public ArrayList<User> getAllMiddleAndLastNames() {
+		var middleAndLastNames = new ArrayList<User>();
 		try {
-			middleNames.addAll(userRepository.getAllMiddleNames());
+			var middleNames = userRepository.getAllMiddleNames();
+			var lastNames = webClientService.getAllLastNames();
+			for(int i = 0; i < middleNames.size(); i++) {
+				var user = new User();
+				user.setMiddleName(middleNames.get(i));
+				user.setLastName(lastNames.get(i));
+				middleAndLastNames.add(user);
+			}
 		} catch (Exception e) {
 			System.out.println("Error while sending GET_ALL_MIDDLE_NAMES in microservice 2");
 			e.printStackTrace();
 		}
-		return middleNames;
-	}
-	
-	public ArrayList<String> getAllLastNames() { 
-		var lastNames = new ArrayList<String>();
-		try {
-			lastNames.addAll(webClientService.getAllLastNames());
-		} catch (Exception e) {
-			System.out.println("Error while sending GET_ALL_LAST_NAMES in microservice 2");
-			e.printStackTrace();
-		}
-		return lastNames;
+		return middleAndLastNames;
 	}
 	
 	public User getUser(String id) {

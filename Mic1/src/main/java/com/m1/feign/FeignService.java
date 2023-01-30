@@ -1,5 +1,7 @@
 package com.m1.feign;
 
+import java.util.ArrayList;
+
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,6 +14,12 @@ import com.m1.db.entity.User;
 
 @FeignClient(name = "m1", url = "http://localhost:8092")
 public interface FeignService {
+	
+	@GetMapping(value = "/user/getall/middlenames")
+	ArrayList<String> getAllMiddleNames();
+	
+	@GetMapping(value = "/user/getall/lastnames")
+	ArrayList<String> getAllLastNames();
 	
 	@GetMapping(value = "/user/get/{id}")
 	User getMiddleAndLastName(@PathVariable String id);

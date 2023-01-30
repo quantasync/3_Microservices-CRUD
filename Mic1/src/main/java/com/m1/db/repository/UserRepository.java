@@ -3,7 +3,6 @@ package com.m1.db.repository;
 import static com.mongodb.client.model.Filters.eq;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import org.bson.Document;
 import org.bson.conversions.Bson;
@@ -23,17 +22,30 @@ public class UserRepository {
 
 	private MongoCollection<Document> collection = DBContext.fetchCollection("data", "Users", Document.class);
 
-	public List<User> getAllUsers() throws Exception { 
+	public ArrayList<String> getAllIDs() throws Exception { 
 		MongoCursor<Document> cursor = DBContext.fetchCollectionCursor("data", "Users", Document.class);
-		var users = new ArrayList<User>();
+		var IDs = new ArrayList<String>();
 		try {
 			while (cursor.hasNext()) {
-				users.add(JsonUtil.fromJsontoUser(cursor.next().toJson()));
+				IDs.add(JsonUtil.fromJsontoUser(cursor.next().toJson()).get_id());
 			}
 		} finally {
 			cursor.close();
-		}		
-		return users;
+		}
+		return IDs;
+	}
+	
+	public ArrayList<String> getAllFirstNames() throws Exception { 
+		MongoCursor<Document> cursor = DBContext.fetchCollectionCursor("data", "Users", Document.class);
+		var firstNames = new ArrayList<String>();
+		try {
+			while (cursor.hasNext()) {
+				firstNames.add(JsonUtil.fromJsontoUser(cursor.next().toJson()).getFirstName());
+			}
+		} finally {
+			cursor.close();
+		}
+		return firstNames;
 	}
 
 	public String getFirstName(String id) throws Exception {

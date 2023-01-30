@@ -1,5 +1,7 @@
 package com.m3.api.controller;
 
+import java.util.ArrayList;
+
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -20,6 +22,11 @@ import lombok.RequiredArgsConstructor;
 public class UserRestController {
 	
 	private final UserService userService;
+	
+	@GetMapping("/getall/lastnames")
+	public ArrayList<String> getAllLastNames() {
+		return userService.getAllLastNames();
+	}
 	
 	@GetMapping("/get/{id}")
 	public User getUser(@PathVariable String id) {

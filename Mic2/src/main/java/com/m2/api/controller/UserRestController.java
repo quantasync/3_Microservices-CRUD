@@ -1,5 +1,7 @@
 package com.m2.api.controller;
 
+import java.util.ArrayList;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,6 +24,16 @@ import lombok.RequiredArgsConstructor;
 public class UserRestController {
 	
 	private final UserService userService;
+	
+	@GetMapping("/getall/middlenames")
+	public ArrayList<String> getAllMiddleNames() {
+		return userService.getAllMiddleNames();
+	}
+	
+	@GetMapping("/getall/lastnames")
+	public ArrayList<String> getAllLastNames() {
+		return userService.getAllMiddleNames();
+	}
 	
 	@GetMapping("/get/{id}")
 	public User getUser(@PathVariable String id) {

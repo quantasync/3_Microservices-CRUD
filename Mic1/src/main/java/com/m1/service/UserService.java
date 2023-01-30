@@ -29,7 +29,19 @@ public class UserService {
 	public List<User> getAll() { 
 		var users = new ArrayList<User>();
 		try {
-			users.addAll(userRepository.getAllUsers());
+			var IDs = userRepository.getAllIDs();
+			var firstNames = userRepository.getAllFirstNames();
+			var middleNames = feignService.getAllMiddleNames();
+			var lastNames = feignService.getAllLastNames();
+			for(int i = 0; i < firstNames.size(); i++) {
+				var user = new User();
+				user.set_id(IDs.get(i));
+				user.setFirstName(firstNames.get(i));
+				user.setMiddleName(middleNames.get(i));
+				user.setLastName(lastNames.get(i));
+				users.add(user);
+			}
+			
 		} catch (Exception e) {
 			System.out.println("Error while sending GETALL in microservice 1");
 			e.printStackTrace();

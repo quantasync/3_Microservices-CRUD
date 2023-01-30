@@ -2,18 +2,36 @@ package com.m3.db.repository;
 
 import static com.mongodb.client.model.Filters.eq;
 
+import java.util.ArrayList;
+
 import org.bson.Document;
 import org.bson.conversions.Bson;
+import org.springframework.stereotype.Repository;
 
-import com.m3.utils.JsonUtil;
 import com.m3.db.DBContext;
 import com.m3.db.entity.User;
+import com.m3.utils.JsonUtil;
 import com.mongodb.BasicDBObject;
 import com.mongodb.DBObject;
 import com.mongodb.client.MongoCollection;
+import com.mongodb.client.MongoCursor;
 import com.mongodb.client.model.Updates;
 
+@Repository
 public class UserRepository {
+	
+	public ArrayList<String> getAllLastNames() throws Exception { 
+		MongoCursor<Document> cursor = DBContext.fetchCollectionCursor("data", "Users", Document.class);
+		var lastNames = new ArrayList<String>();
+		try {
+			while (cursor.hasNext()) {
+				lastNames.add(JsonUtil.fromJsontoUser(cursor.next().toJson()).getLastName());
+			}
+		} finally {
+			cursor.close();
+		}
+		return lastNames;
+	}
 	
 	public static String getLastName(String id) throws Exception {
 		MongoCollection<Document> collection = DBContext.fetchCollection("data", "Users", Document.class);

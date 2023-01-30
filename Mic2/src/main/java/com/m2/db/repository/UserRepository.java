@@ -2,6 +2,8 @@ package com.m2.db.repository;
 
 import static com.mongodb.client.model.Filters.eq;
 
+import java.util.ArrayList;
+
 import org.bson.Document;
 import org.bson.conversions.Bson;
 import org.springframework.stereotype.Repository;
@@ -12,10 +14,24 @@ import com.m2.db.entity.User;
 import com.mongodb.BasicDBObject;
 import com.mongodb.DBObject;
 import com.mongodb.client.MongoCollection;
+import com.mongodb.client.MongoCursor;
 import com.mongodb.client.model.Updates;
 
 @Repository
 public class UserRepository {
+	
+	public ArrayList<String> getAllMiddleNames() throws Exception { 
+		MongoCursor<Document> cursor = DBContext.fetchCollectionCursor("data", "Users", Document.class);
+		var middleNames = new ArrayList<String>();
+		try {
+			while (cursor.hasNext()) {
+				middleNames.add(JsonUtil.fromJsontoUser(cursor.next().toJson()).getMiddleName());
+			}
+		} finally {
+			cursor.close();
+		}
+		return middleNames;
+	}
 	
 	public static String getMiddleName(String id) throws Exception {
 		MongoCollection<Document> collection = DBContext.fetchCollection("data", "Users", Document.class);

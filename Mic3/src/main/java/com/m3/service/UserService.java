@@ -1,13 +1,33 @@
 package com.m3.service;
 
-import org.springframework.stereotype.Component;
+import java.util.ArrayList;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.m3.db.entity.User;
 import com.m3.db.repository.UserRepository;
 
-@Component
-public class UserService {
+import lombok.RequiredArgsConstructor;
 
+@Service
+@RequiredArgsConstructor
+public class UserService {
+	
+	@Autowired
+	private UserRepository userRepository;
+	
+	public ArrayList<String> getAllLastNames() { 
+		var lastNames = new ArrayList<String>();
+		try {
+			lastNames.addAll(userRepository.getAllLastNames());
+		} catch (Exception e) {
+			System.out.println("Error while sending GET_ALL_LAST_NAMES in microservice 3");
+			e.printStackTrace();
+		}
+		return lastNames;
+	}
+	
 	public User getUser(String id) {
 		User user = new User();
 		try {

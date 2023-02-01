@@ -22,33 +22,25 @@ public class UserRepository {
 
 	private MongoCollection<Document> collection = DBContext.fetchCollection("data", "Users", Document.class);
 
-	public ArrayList<String> getAllIDs() throws Exception { 
+	public ArrayList<User> getAll() throws Exception { 
 		MongoCursor<Document> cursor = DBContext.fetchCollectionCursor("data", "Users", Document.class);
-		var IDs = new ArrayList<String>();
+		var usersWithIdAndFirstName = new ArrayList<User>();
 		try {
 			while (cursor.hasNext()) {
-				IDs.add(JsonUtil.fromJsontoUser(cursor.next().toJson()).get_id());
+				User body = new User();
+				User user = new User();
+				body = JsonUtil.fromJsontoUser(cursor.next().toJson());
+				user.set_id(body.get_id());
+				user.setFirstName(body.getFirstName());
+				usersWithIdAndFirstName.add(user);
 			}
 		} finally {
 			cursor.close();
 		}
-		return IDs;
-	}
-	
-	public ArrayList<String> getAllFirstNames() throws Exception { 
-		MongoCursor<Document> cursor = DBContext.fetchCollectionCursor("data", "Users", Document.class);
-		var firstNames = new ArrayList<String>();
-		try {
-			while (cursor.hasNext()) {
-				firstNames.add(JsonUtil.fromJsontoUser(cursor.next().toJson()).getFirstName());
-			}
-		} finally {
-			cursor.close();
-		}
-		return firstNames;
+		return usersWithIdAndFirstName;
 	}
 
-	public String getFirstName(String id) throws Exception {
+	public String get(String id) throws Exception {
 		Document myDoc = collection.find(eq("_id", id)).first();
 		return JsonUtil.fromJsontoUser(myDoc.toJson()).getFirstName();
 	}

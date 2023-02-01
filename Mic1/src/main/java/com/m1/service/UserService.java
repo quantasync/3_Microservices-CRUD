@@ -28,16 +28,12 @@ public class UserService {
 	
 	public List<User> getAll() { 
 		var users = new ArrayList<User>();
+		var usersWithIdAndFirstName = new ArrayList<User>();
 		try {
-			users.addAll(feignService.getAllMiddleAndLastNames());
-			var IDs = userRepository.getAllIDs();
-			var firstNames = userRepository.getAllFirstNames();
-			for(int i = 0; i < firstNames.size(); i++) {
-				var user = new User();
-				user.set_id(IDs.get(i));
-				user.setFirstName(firstNames.get(i));
-				user.setMiddleName(users.get(i).getMiddleName());
-				user.setLastName(users.get(i).getLastName());
+		 	users.addAll(feignService.getAllMiddleAndLastNames());
+			usersWithIdAndFirstName = userRepository.getAll();
+			for(int i = 0; i < usersWithIdAndFirstName.size(); i++) {
+				var user = new User(usersWithIdAndFirstName.get(i).get_id(), usersWithIdAndFirstName.get(i).getFirstName(), users.get(i).getMiddleName(),users.get(i).getLastName());
 				users.set(i, user);
 			}
 			
@@ -48,11 +44,11 @@ public class UserService {
 		return users;
 	}
 	
-	public User getUser(String id) {
+	public User get(String id) {
 		User user = new User();
 		try {
 			user = feignService.getMiddleAndLastName(id);
-			user.setFirstName(userRepository.getFirstName(id));
+			user.setFirstName(userRepository.get(id));
 		} catch (Exception e) {
 			System.out.println("Error while sending GET in microservice 1");
 			e.printStackTrace();
@@ -60,7 +56,7 @@ public class UserService {
 		return user;
 	}
 	
-	public User createUser(User user) {
+	public User create(User user) {
 		String id = UserUtils.generateId();
 		try {
 			userRepository.addFirstName(user, id);
@@ -73,7 +69,7 @@ public class UserService {
 		return user;
 	}
 	
-	public User updateUser(User user, String id) {
+	public User update(User user, String id) {
 		try {
 			userRepository.updateFirstName(user, id);
 			feignService.updateMiddleAndLastName(user, id);
@@ -85,7 +81,7 @@ public class UserService {
 		return user;
 	}
 	
-	public String deleteUser(String id){
+	public String delete(String id){
 		userRepository.deleteFirstName(id);
 		feignService.deleteMiddleAndLastName(id);
 		return "Deleted!";

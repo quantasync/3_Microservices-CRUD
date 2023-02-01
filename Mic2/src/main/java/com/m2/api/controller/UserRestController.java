@@ -31,23 +31,25 @@ public class UserRestController {
 	}
 	
 	@GetMapping("/get/{id}")
-	public User getUser(@PathVariable String id) {
-		return userService.getUser(id);
+	public User get(@PathVariable String id) {
+		return userService.get(id);
 	}
 	
 	@PostMapping("/add/{id}")
 	@ResponseStatus(HttpStatus.CREATED)
-	public void postUserToMic3(@RequestBody User user, @PathVariable String id) {
-		userService.postUser(user, id);
+	public void create(@RequestBody User user, @PathVariable String id) {
+		user.set_id(id);
+		userService.create(user);
 	}
 
 	@PutMapping("/update/{id}")
-	public void putUser(@RequestBody User user, @PathVariable String id) {
-		userService.putUser(user, id);
+	public void update(@RequestBody User user, @PathVariable String id) {
+		user.set_id(id);
+		userService.update(user);
 	}
 
 	@DeleteMapping("/delete/{id}")
-	public void deleteUser(@PathVariable String id) {
-		userService.deleteUser(id);
+	public void delete(@PathVariable String id) {
+		userService.delete(id);
 	}
 }

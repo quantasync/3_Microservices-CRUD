@@ -28,7 +28,7 @@ public class UserService {
 		return lastNames;
 	}
 	
-	public User getUser(String id) {
+	public User get(String id) {
 		User user = new User();
 		try {
 			user.set_id(id);
@@ -40,25 +40,25 @@ public class UserService {
 		return user;
 	}
 
-	public void postUser(User user, String id) {
+	public void create(User user) {
 		try {
-			UserRepository.addLastName(user, id);
+			UserRepository.addLastName(user);
 		} catch (Exception e) {
 			System.out.println("Error while sending POST in microservice 3");
 			e.printStackTrace();
 		}
 	}
 
-	public void putUser(User user, String id) {
+	public void update(User user) {
 		try {
-			UserRepository.updateLastName(user, id);
+			UserRepository.updateLastName(user);
 		} catch (Exception e) {
 			System.out.println("Error while sending PUT in microservice 3");
 			e.printStackTrace();
 		}
 	}
 
-	public void deleteUser(String id) {
+	public void delete(String id) {
 		UserRepository.deleteLastName(id);
 	}
 }

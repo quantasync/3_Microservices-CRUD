@@ -20,6 +20,8 @@ import com.mongodb.client.model.Updates;
 @Repository
 public class UserRepository {
 	
+	private static MongoCollection<Document> collection = DBContext.fetchCollection("data", "Users", Document.class);
+	
 	public ArrayList<String> getAllMiddleNames() throws Exception { 
 		MongoCursor<Document> cursor = DBContext.fetchCollectionCursor("data", "Users", Document.class);
 		var middleNames = new ArrayList<String>();
@@ -34,14 +36,12 @@ public class UserRepository {
 	}
 	
 	public static String getMiddleName(String id) throws Exception {
-		MongoCollection<Document> collection = DBContext.fetchCollection("data", "Users", Document.class);
 		Document myDoc = collection.find(eq("_id", id)).first();
 		return JsonUtil.fromJsontoUser(myDoc.toJson()).getMiddleName();
 	}
 	
-	public static void addMiddleName(User user, String id) {
-		MongoCollection<Document> collection = DBContext.fetchCollection("data", "Users", Document.class);
-		Document found = (Document) collection.find(new Document("_id", id)).first();
+	public static void addMiddleName(User user) {
+		Document found = (Document) collection.find(new Document("_id", user.get_id())).first();
 
 		if (found != null) {
 			Bson updatevalue = new Document("middleName", user.getMiddleName());
@@ -50,14 +50,13 @@ public class UserRepository {
 		}
 	}
 
-	public static void updateMiddleName(User user, String id) throws Exception  {
+	public static void updateMiddleName(User user) throws Exception  {
 		MongoCollection<User> collection = DBContext.fetchCollection("data", "Users", User.class);
-		collection.updateOne(new Document("_id", id),
+		collection.updateOne(new Document("_id", user.get_id()),
 				Updates.set("middleName", user.getMiddleName()));
 	}
 
 	public static void deleteMiddleName(String id) {
-		MongoCollection<Document> collection = DBContext.fetchCollection("data", "Users", Document.class);
 		DBObject update = new BasicDBObject();
 		update.put("$unset", new BasicDBObject("middleName", ""));
 		collection.updateOne(new BasicDBObject("_id", id), (Bson) update);

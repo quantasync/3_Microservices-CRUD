@@ -32,13 +32,13 @@ public class WebClientService {
 				.bodyToMono(User.class).block();
 	}
 		
-	public ClientResponse createLastName(User user, String id) {
-		return webClient.post().uri("/add/" + id).body(Mono.just(user), User.class).retrieve()
+	public ClientResponse createLastName(User user) {
+		return webClient.post().uri("/add/").body(Mono.just(user), User.class).retrieve()
 				.bodyToMono(ClientResponse.class).block();
 	}
 
-	public ClientResponse updateLastName(User user, String id) {
-		return webClient.put().uri("/update/" + id).body(Mono.just(user), User.class).retrieve()
+	public ClientResponse updateLastName(User user) {
+		return webClient.put().uri("/update/").body(Mono.just(user), User.class).retrieve()
 				.bodyToMono(ClientResponse.class).block();
 	}
 

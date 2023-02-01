@@ -1,6 +1,5 @@
 package com.m2.db;
 
-import org.bson.Document;
 import org.bson.codecs.configuration.CodecRegistries;
 import org.bson.codecs.pojo.PojoCodecProvider;
 
@@ -20,11 +19,8 @@ public class DBContext {
 				.getCollection(collectionName, collectionType);
 	}
 
-	public static <T> MongoCursor<Document> fetchCollectionCursor(String dbName, String collectionName,
+	public static <T> MongoCursor<T> fetchCollectionCursor(String dbName, String collectionName,
 			Class<T> collectionType) {
-		return MongoClients.create(MONGO_URI).getDatabase(dbName)
-				.withCodecRegistry(CodecRegistries.fromRegistries(MongoClientSettings.getDefaultCodecRegistry(),
-						CodecRegistries.fromProviders(PojoCodecProvider.builder().automatic(true).build())))
-				.getCollection(collectionName).find().iterator();
+		return fetchCollection(dbName, collectionName, collectionType).find().iterator();
 	}
 }

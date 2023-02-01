@@ -20,6 +20,8 @@ import com.mongodb.client.model.Updates;
 @Repository
 public class UserRepository {
 	
+	private static MongoCollection<Document> collection = DBContext.fetchCollection("data", "Users", Document.class);
+	
 	public ArrayList<String> getAllLastNames() throws Exception { 
 		MongoCursor<Document> cursor = DBContext.fetchCollectionCursor("data", "Users", Document.class);
 		var lastNames = new ArrayList<String>();
@@ -34,14 +36,12 @@ public class UserRepository {
 	}
 	
 	public static String getLastName(String id) throws Exception {
-		MongoCollection<Document> collection = DBContext.fetchCollection("data", "Users", Document.class);
 		Document myDoc = collection.find(eq("_id", id)).first();
 		return JsonUtil.fromJsontoUser(myDoc.toJson()).getLastName();
 	}
 	
-	public static void addLastName(User user, String id) throws Exception {
-		MongoCollection<Document> collection = DBContext.fetchCollection("data", "Users", Document.class);
-		Document found = (Document) collection.find(new Document("_id", id)).first();
+	public static void addLastName(User user) throws Exception {
+		Document found = (Document) collection.find(new Document("_id", user.get_id())).first();
 
 		if (found != null) {
 			Bson updatevalue = new Document("lastName", user.getLastName());
@@ -50,13 +50,12 @@ public class UserRepository {
 		}
 	}
 
-	public static void updateLastName(User user, String id) throws Exception {
+	public static void updateLastName(User user) throws Exception {
 		MongoCollection<User> collection = DBContext.fetchCollection("data", "Users", User.class);
-		collection.updateOne(new Document("_id", id), Updates.set("lastName", user.getLastName()));
+		collection.updateOne(new Document("_id", user.get_id()), Updates.set("lastName", user.getLastName()));
 	}
 
 	public static void deleteLastName(String id) {
-		MongoCollection<Document> collection = DBContext.fetchCollection("data", "Users", Document.class);
 		DBObject update = new BasicDBObject();
 		update.put("$unset", new BasicDBObject("lastName", ""));
 		collection.updateOne(new BasicDBObject("_id", id), (Bson) update);

@@ -27,9 +27,7 @@ public class UserService {
 			var middleNames = userRepository.getAllMiddleNames();
 			var lastNames = webClientService.getAllLastNames();
 			for(int i = 0; i < middleNames.size(); i++) {
-				var user = new User();
-				user.setMiddleName(middleNames.get(i));
-				user.setLastName(lastNames.get(i));
+				var user = new User(middleNames.get(i), lastNames.get(i));
 				middleAndLastNames.add(user);
 			}
 		} catch (Exception e) {
@@ -39,7 +37,7 @@ public class UserService {
 		return middleAndLastNames;
 	}
 	
-	public User getUser(String id) {
+	public User get(String id) {
 		User user = new User();
 		try {
 			user = webClientService.getLastName(id);
@@ -51,22 +49,22 @@ public class UserService {
 		return user;
 	}
 	
-	public void postUser(User user, String id) {
-		UserRepository.addMiddleName(user, id);
-		webClientService.createLastName(user, id);
+	public void create(User user) {
+		UserRepository.addMiddleName(user);
+		webClientService.createLastName(user);
 	}
 
-	public void putUser(User user, String id) {
+	public void update(User user) {
 		try {
-			UserRepository.updateMiddleName(user, id);
+			UserRepository.updateMiddleName(user);
 		} catch (Exception e) {
 			System.out.println("Error while sending PUT in microservice 2");
 			e.printStackTrace();
 		}
-		webClientService.updateLastName(user, id);
+		webClientService.updateLastName(user);
 	}
 
-	public void deleteUser(String id) {
+	public void delete(String id) {
 		UserRepository.deleteMiddleName(id);
 		webClientService.deleteLastName(id);
 	}

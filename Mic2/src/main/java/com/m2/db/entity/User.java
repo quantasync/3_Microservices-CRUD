@@ -8,4 +8,13 @@ public class User {
 	private String firstName;
 	private String middleName;
 	private String lastName;
+	
+	public User() {
+		
+	}
+	
+	public User(String middleName, String lastName) {
+		this.middleName = middleName;
+		this.lastName = lastName;
+		}
 }

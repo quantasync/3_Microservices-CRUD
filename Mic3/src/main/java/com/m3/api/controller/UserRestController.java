@@ -29,22 +29,22 @@ public class UserRestController {
 	}
 	
 	@GetMapping("/get/{id}")
-	public User getUser(@PathVariable String id) {
-		return userService.getUser(id);
+	public User get(@PathVariable String id) {
+		return userService.get(id);
 	}
 	
-	@PostMapping("/add/{id}")
-	public void postUser(@RequestBody User user, @PathVariable String id) {
-		userService.postUser(user, id);
+	@PostMapping("/add/")
+	public void create(@RequestBody User user) {
+		userService.create(user);
 	}
 
-	@PutMapping("/update/{id}")
-	public void putUser(@RequestBody User user, @PathVariable String id) {
-		userService.putUser(user, id);
+	@PutMapping("/update/")
+	public void update(@RequestBody User user) {
+		userService.update(user);
 	}
 
 	@DeleteMapping("/delete/{id}")
-	public void deleteUser(@PathVariable String id) {
-		userService.deleteUser(id);
+	public void delete(@PathVariable String id) {
+		userService.delete(id);
 	}
 }

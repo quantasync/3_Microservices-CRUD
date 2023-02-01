@@ -2,13 +2,13 @@ version: '3'
 services:
 
   mongodb:
-    image: mongo
-    ports:
-      - 27017:27017
+     image: mongo
+     ports:
+       - 27017:27017
 
   MIC1:
      image: microservice1
-     build: 
+     build:
        context: ./Mic1
        dockerfile: Dockerfile
      ports:
@@ -22,8 +22,6 @@ services:
      build:
        context: ./Mic2
        dockerfile: Dockerfile
-     ports:
-       - 8092:8092
      network_mode: host
      depends_on:
        - MIC1
@@ -33,8 +31,6 @@ services:
      build:
        context: ./Mic3
        dockerfile: Dockerfile
-     ports:
-       - 8093:8093
      network_mode: host
      depends_on:
        - MIC2

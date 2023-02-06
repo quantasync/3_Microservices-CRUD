@@ -41,7 +41,7 @@ public class UserService {
 		User user = new User();
 		try {
 			user = webClientService.getLastName(id);
-			user.setMiddleName(UserRepository.getMiddleName(id)); 
+			user.setMiddleName(userRepository.getMiddleName(id)); 
 		} catch (Exception e) {
 			System.out.println("Error while sending GET in microservice 2");
 			e.printStackTrace();
@@ -50,13 +50,13 @@ public class UserService {
 	}
 	
 	public void create(User user) {
-		UserRepository.addMiddleName(user);
+		userRepository.addMiddleName(user);
 		webClientService.createLastName(user);
 	}
 
 	public void update(User user) {
 		try {
-			UserRepository.updateMiddleName(user);
+			userRepository.updateMiddleName(user);
 		} catch (Exception e) {
 			System.out.println("Error while sending PUT in microservice 2");
 			e.printStackTrace();
@@ -65,7 +65,7 @@ public class UserService {
 	}
 
 	public void delete(String id) {
-		UserRepository.deleteMiddleName(id);
+		userRepository.deleteMiddleName(id);
 		webClientService.deleteLastName(id);
 	}
 }

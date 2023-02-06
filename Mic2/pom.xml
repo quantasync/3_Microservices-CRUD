@@ -58,11 +58,6 @@
 			<artifactId>reactor-netty</artifactId>
 			<version>1.1.1</version>
 		</dependency>
-		<dependency>
-			<groupId>com.example</groupId>
-			<artifactId>Mic1</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
-		</dependency>
 	</dependencies>
 	<build>
 		<plugins>

@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 import com.m1.db.entity.User;
 
-@FeignClient(name = "m1", url = "http://localhost:8092")
+@FeignClient(name = "m1", url = "http://mic2:8092")
 public interface FeignService {
 	
 	@GetMapping(value = "/user/getall")

@@ -14,7 +14,7 @@ import reactor.core.publisher.Mono;
 
 @Service
 public class WebClientService {
-	WebClient webClient = WebClient.builder().baseUrl("http://localhost:8093/user")
+	WebClient webClient = WebClient.builder().baseUrl("http://mic3:8093/user")
 			.defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
 			.defaultHeader(HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON_VALUE).build();
 	

@@ -32,7 +32,7 @@ public class UserService {
 		User user = new User();
 		try {
 			user.set_id(id);
-			user.setLastName(UserRepository.getLastName(id));
+			user.setLastName(userRepository.getLastName(id));
 		} catch (Exception e) {
 			System.out.println("Error while sending GET in microservice 3");
 			e.printStackTrace();
@@ -42,7 +42,7 @@ public class UserService {
 
 	public void create(User user) {
 		try {
-			UserRepository.addLastName(user);
+			userRepository.addLastName(user);
 		} catch (Exception e) {
 			System.out.println("Error while sending POST in microservice 3");
 			e.printStackTrace();
@@ -51,7 +51,7 @@ public class UserService {
 
 	public void update(User user) {
 		try {
-			UserRepository.updateLastName(user);
+			userRepository.updateLastName(user);
 		} catch (Exception e) {
 			System.out.println("Error while sending PUT in microservice 3");
 			e.printStackTrace();
@@ -59,6 +59,6 @@ public class UserService {
 	}
 
 	public void delete(String id) {
-		UserRepository.deleteLastName(id);
+		userRepository.deleteLastName(id);
 	}
 }

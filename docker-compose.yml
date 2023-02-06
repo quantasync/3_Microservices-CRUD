@@ -1,0 +1,57 @@
+version: '3.8'
+services:
+
+  db:
+     image: mongo
+     container_name: mongo
+     restart: on-failure
+     ports:
+       - 27017:27017
+     networks:
+       - net1
+
+  MIC1:
+     image: mic1
+     container_name: mic1
+     build: ./Mic1
+     environment:
+       - MONGO_URL=mongodb://mongo:27017
+     restart: on-failure
+     depends_on:
+       - db
+     ports:
+       - 8091:8091
+     networks:
+       - net1
+
+  MIC2:
+     image: mic2
+     container_name: mic2
+     build: ./Mic2
+     environment:
+       - MONGO_URL=mongodb://mongo:27017
+     restart: on-failure
+     depends_on:
+       - MIC1
+     expose:
+       - "8092"
+     networks:
+       - net1
+
+  MIC3:
+     image: mic3
+     container_name: mic3
+     build: ./Mic3
+     environment:
+       - MONGO_URL=mongodb://mongo:27017
+     restart: on-failure
+     depends_on:
+       - MIC2
+     expose:
+       - "8093"
+     networks:
+       - net1
+
+networks:
+  net1:
+     driver: bridge
